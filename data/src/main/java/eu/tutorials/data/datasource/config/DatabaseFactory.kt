@@ -12,17 +12,20 @@ import eu.tutorials.data.datasource.table.UserTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
-import com.typesafe.config.ConfigFactory
 
 object DatabaseFactory {
     fun init() {
-        val config = ConfigFactory.load().getConfig("database")
+        val dbUrl = System.getenv("DB_URL") ?: "jdbc:mysql://volunteer-mysql:3306/volunteer?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+        val dbUser = System.getenv("DB_USER") ?: "user"
+        val dbPassword = System.getenv("DB_PASSWORD") ?: "password"
+
+        println("Connecting to DB: $dbUrl")
 
         Database.connect(
-            url = config.getString("url"),
-            driver = config.getString("driver"),
-            user = config.getString("user"),
-            password = config.getString("password")
+            url = dbUrl,
+            driver = "com.mysql.cj.jdbc.Driver",
+            user = dbUser,
+            password = dbPassword
         )
 
         transaction {

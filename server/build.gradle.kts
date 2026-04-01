@@ -1,8 +1,11 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("java-library")
     kotlin("jvm") version "1.9.10"
     id("application")
     alias(libs.plugins.kotlin.serialization)
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 application {
     mainClass.set("eu.tutorials.server.ServerKt")
@@ -54,6 +57,15 @@ tasks.register<Jar>("fatJar") {
             if (it.isDirectory) it else zipTree(it)
         }
     })
+}
+
+tasks.named<ShadowJar>("shadowJar") {
+    archiveBaseName.set("server")
+    archiveClassifier.set("")
+    archiveVersion.set("")
+    manifest {
+        attributes["Main-Class"] = "eu.tutorials.server.ServerKt"
+    }
 }
 
 val ktor_version = "2.3.5"
