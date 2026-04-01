@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">VolunteerApp</string>
+    <color name="launch_background_color">#79B7DA</color>
+</resources>

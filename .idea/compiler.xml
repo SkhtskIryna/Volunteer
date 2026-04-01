@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="VolunteerApp.app" target="17" />
+      <module name="VolunteerApp.application.main" target="11" />
+      <module name="VolunteerApp.application.test" target="11" />
+      <module name="VolunteerApp.data" target="17" />
+      <module name="VolunteerApp.data.main" target="17" />
+      <module name="VolunteerApp.data.test" target="17" />
+      <module name="VolunteerApp.domain" target="17" />
+      <module name="VolunteerApp.domain.main" target="17" />
+      <module name="VolunteerApp.domain.test" target="17" />
+      <module name="VolunteerApp.server" target="17" />
+      <module name="VolunteerApp.server.main" target="17" />
+      <module name="VolunteerApp.server.test" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

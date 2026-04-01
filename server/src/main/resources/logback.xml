@@ -1,0 +1,43 @@
+<configuration>
+
+    <!-- Логування у файл з ротацією -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/server.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Ротація щодня -->
+            <fileNamePattern>logs/server-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Логування в консоль -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Логування Ktor -->
+    <logger name="io.ktor" level="DEBUG"/>
+    <logger name="io.ktor.application" level="DEBUG"/>
+    <logger name="io.ktor.routing" level="DEBUG"/>
+
+    <!-- Логування Exposed SQL -->
+    <logger name="Exposed" level="DEBUG"/>
+    <logger name="org.jetbrains.exposed.sql" level="DEBUG"/>
+    <logger name="org.jetbrains.exposed.sql.transactions" level="DEBUG"/>
+
+    <!-- Логування власних класів -->
+    <logger name="UserService" level="DEBUG"/>
+    <logger name="ProfileSettings" level="DEBUG"/>
+
+    <!-- Root логер для всього -->
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>

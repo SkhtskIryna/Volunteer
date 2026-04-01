@@ -1,0 +1,43 @@
+[versions]
+junitJupiter = "5.10.1"
+kotlinxCoroutinesTest = "1.7.3"
+ktor = "2.3.9"
+exposed = "0.50.1"
+mysql = "8.0.33"
+jbcrypt = "0.4"
+serialization = "1.7.3"
+mockk = "1.13.9"
+kotlinTest = "2.0.21"
+
+agp = "8.9.0"
+kotlin = "1.9.10"
+
+[plugins]
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+[libraries]
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitJupiter" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+
+ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
+ktor-server-content-negotiation = { group = "io.ktor", name = "ktor-server-content-negotiation", version.ref = "ktor"}
+ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor"}
+ktor-server-auth = { module = "io.ktor:ktor-server-auth-jvm", version.ref = "ktor" }
+ktor-server-call-logging = { group = "io.ktor", name = "ktor-server-call-logging", version.ref = "ktor"}
+ktor-server-config-yaml = { group = "io.ktor", name = "ktor-server-config-yaml", version.ref = "ktor"}
+
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization"}
+exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposed"}
+exposed-dao = { group = "org.jetbrains.exposed", name = "exposed-dao", version.ref = "exposed"}
+exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "exposed"}
+exposed-java-time = { group = "org.jetbrains.exposed", name = "exposed-java-time", version.ref = "exposed"}
+
+mysql-connector-java = { group = "mysql", name = "mysql-connector-java", version.ref = "mysql"}
+jbcrypt = { group = "org.mindrot", name = "jbcrypt", version.ref = "jbcrypt"}
+
+ktor-server-tests = { group = "io.ktor", name = "ktor-server-tests", version.ref = "ktor" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlinTest" }
