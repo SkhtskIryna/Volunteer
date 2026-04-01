@@ -1,5 +1,6 @@
 package eu.tutorials.data.datasource.config
 
+import com.typesafe.config.ConfigFactory
 import eu.tutorials.data.datasource.table.BinTable
 import eu.tutorials.data.datasource.table.CardTable
 import eu.tutorials.data.datasource.table.DonationTable
@@ -15,17 +16,13 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 object DatabaseFactory {
     fun init() {
-        val dbUrl = System.getenv("DB_URL") ?: "jdbc:mysql://volunteer-mysql:3306/volunteer?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
-        val dbUser = System.getenv("DB_USER") ?: "user"
-        val dbPassword = System.getenv("DB_PASSWORD") ?: "password"
-
-        println("Connecting to DB: $dbUrl")
+        val config = ConfigFactory.load().getConfig("database")
 
         Database.connect(
-            url = dbUrl,
-            driver = "com.mysql.cj.jdbc.Driver",
-            user = dbUser,
-            password = dbPassword
+            url = config.getString("url"),
+            driver = config.getString("driver"),
+            user = config.getString("user"),
+            password = config.getString("password")
         )
 
         transaction {

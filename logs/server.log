@@ -2749,3 +2749,346 @@ java.lang.IllegalArgumentException: Material participation not found
 2026-04-01 16:11:02.532 [DefaultDispatcher-worker-1] INFO  Exposed - Checking mapping consistence took 42ms
 2026-04-01 16:11:02.702 [DefaultDispatcher-worker-1] INFO  ktor.application - Application started in 1.581 seconds.
 2026-04-01 16:11:02.720 [DefaultDispatcher-worker-6] INFO  ktor.application - Responding at http://127.0.0.1:8080
+2026-04-01 18:57:39.350 [DefaultDispatcher-worker-1] INFO  ktor.application - Autoreload is disabled because the development mode is off.
+2026-04-01 18:57:42.695 [DefaultDispatcher-worker-1] WARN  Exposed - Transaction attempt #0 failed: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.. Statement(s): null
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:175)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:64)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at org.jetbrains.exposed.sql.Database$Companion$connect$8.invoke(Database.kt:287)
+	at org.jetbrains.exposed.sql.Database$Companion$connect$8.invoke(Database.kt:283)
+	at org.jetbrains.exposed.sql.Database$Companion$doConnect$3.invoke(Database.kt:165)
+	at org.jetbrains.exposed.sql.Database$Companion$doConnect$3.invoke(Database.kt:166)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction$connectionLazy$1.invoke(ThreadLocalTransactionManager.kt:138)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction$connectionLazy$1.invoke(ThreadLocalTransactionManager.kt:137)
+	at kotlin.UnsafeLazyImpl.getValue(Lazy.kt:81)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction.getConnection(ThreadLocalTransactionManager.kt:163)
+	at org.jetbrains.exposed.sql.Transaction.getConnection(Transaction.kt)
+	at org.jetbrains.exposed.sql.Database.metadata$exposed_core(Database.kt:44)
+	at org.jetbrains.exposed.sql.vendors.VendorDialect.resetCaches(VendorDialect.kt:143)
+	at org.jetbrains.exposed.sql.SchemaUtils.createMissingTablesAndColumns(SchemaUtils.kt:480)
+	at org.jetbrains.exposed.sql.SchemaUtils.createMissingTablesAndColumns$default(SchemaUtils.kt:478)
+	at eu.tutorials.data.datasource.config.DatabaseFactory$init$1.invoke(DatabaseFactory.kt:32)
+	at eu.tutorials.data.datasource.config.DatabaseFactory$init$1.invoke(DatabaseFactory.kt:31)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.inTopLevelTransaction$run(ThreadLocalTransactionManager.kt:324)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.access$inTopLevelTransaction$run(ThreadLocalTransactionManager.kt:1)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt$inTopLevelTransaction$1.invoke(ThreadLocalTransactionManager.kt:371)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.keepAndRestoreTransactionRefAfterRun(ThreadLocalTransactionManager.kt:379)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.inTopLevelTransaction(ThreadLocalTransactionManager.kt:370)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt$transaction$1.invoke(ThreadLocalTransactionManager.kt:279)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.keepAndRestoreTransactionRefAfterRun(ThreadLocalTransactionManager.kt:379)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction(ThreadLocalTransactionManager.kt:249)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction(ThreadLocalTransactionManager.kt:227)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction$default(ThreadLocalTransactionManager.kt:226)
+	at eu.tutorials.data.datasource.config.DatabaseFactory.init(DatabaseFactory.kt:31)
+	at eu.tutorials.server.ApplicationKt.module(Application.kt:86)
+	at eu.tutorials.server.KtorServer$start$1.invoke(KtorServer.kt:25)
+	at eu.tutorials.server.KtorServer$start$1.invoke(KtorServer.kt:24)
+	at io.ktor.server.engine.internal.CallableUtilsKt.executeModuleFunction(CallableUtils.kt:51)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading$launchModuleByName$1.invoke(ApplicationEngineEnvironmentReloading.kt:332)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading$launchModuleByName$1.invoke(ApplicationEngineEnvironmentReloading.kt:331)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.avoidingDoubleStartupFor(ApplicationEngineEnvironmentReloading.kt:356)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.launchModuleByName(ApplicationEngineEnvironmentReloading.kt:331)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.access$launchModuleByName(ApplicationEngineEnvironmentReloading.kt:32)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading$instantiateAndConfigureApplication$1.invoke(ApplicationEngineEnvironmentReloading.kt:319)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading$instantiateAndConfigureApplication$1.invoke(ApplicationEngineEnvironmentReloading.kt:310)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.avoidingDoubleStartup(ApplicationEngineEnvironmentReloading.kt:338)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.instantiateAndConfigureApplication(ApplicationEngineEnvironmentReloading.kt:310)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.createApplication(ApplicationEngineEnvironmentReloading.kt:150)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.start(ApplicationEngineEnvironmentReloading.kt:277)
+	at io.ktor.server.cio.CIOApplicationEngine$initServerJob$1$2.invokeSuspend(CIOApplicationEngine.kt:207)
+	at io.ktor.server.cio.CIOApplicationEngine$initServerJob$1$2.invoke(CIOApplicationEngine.kt)
+	at io.ktor.server.cio.CIOApplicationEngine$initServerJob$1$2.invoke(CIOApplicationEngine.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:61)
+	at kotlinx.coroutines.BuildersKt__Builders_commonKt.withContext(Builders.common.kt:163)
+	at kotlinx.coroutines.BuildersKt.withContext(Unknown Source)
+	at io.ktor.server.cio.CIOApplicationEngine$initServerJob$1.invokeSuspend(CIOApplicationEngine.kt:206)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:585)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:802)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:706)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:693)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:150)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:166)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:89)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:121)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:945)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:815)
+	... 61 common frames omitted
+Caused by: java.net.UnknownHostException: Этот хост неизвестен (volunteer-mysql)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:52)
+	at java.base/java.net.InetAddress$PlatformResolver.lookupByName(InetAddress.java:1211)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1828)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:1139)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:130)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:63)
+	... 64 common frames omitted
+2026-04-01 18:57:42.724 [DefaultDispatcher-worker-1] WARN  Exposed - Wait 0 milliseconds before retrying
+2026-04-01 18:57:42.731 [DefaultDispatcher-worker-1] WARN  Exposed - Transaction attempt #1 failed: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.. Statement(s): null
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:175)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:64)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at org.jetbrains.exposed.sql.Database$Companion$connect$8.invoke(Database.kt:287)
+	at org.jetbrains.exposed.sql.Database$Companion$connect$8.invoke(Database.kt:283)
+	at org.jetbrains.exposed.sql.Database$Companion$doConnect$3.invoke(Database.kt:165)
+	at org.jetbrains.exposed.sql.Database$Companion$doConnect$3.invoke(Database.kt:166)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction$connectionLazy$1.invoke(ThreadLocalTransactionManager.kt:138)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction$connectionLazy$1.invoke(ThreadLocalTransactionManager.kt:137)
+	at kotlin.UnsafeLazyImpl.getValue(Lazy.kt:81)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction.getConnection(ThreadLocalTransactionManager.kt:163)
+	at org.jetbrains.exposed.sql.Transaction.getConnection(Transaction.kt)
+	at org.jetbrains.exposed.sql.Database.metadata$exposed_core(Database.kt:44)
+	at org.jetbrains.exposed.sql.vendors.VendorDialect.resetCaches(VendorDialect.kt:143)
+	at org.jetbrains.exposed.sql.SchemaUtils.createMissingTablesAndColumns(SchemaUtils.kt:480)
+	at org.jetbrains.exposed.sql.SchemaUtils.createMissingTablesAndColumns$default(SchemaUtils.kt:478)
+	at eu.tutorials.data.datasource.config.DatabaseFactory$init$1.invoke(DatabaseFactory.kt:32)
+	at eu.tutorials.data.datasource.config.DatabaseFactory$init$1.invoke(DatabaseFactory.kt:31)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.inTopLevelTransaction$run(ThreadLocalTransactionManager.kt:324)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.access$inTopLevelTransaction$run(ThreadLocalTransactionManager.kt:1)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt$inTopLevelTransaction$1.invoke(ThreadLocalTransactionManager.kt:371)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.keepAndRestoreTransactionRefAfterRun(ThreadLocalTransactionManager.kt:379)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.inTopLevelTransaction(ThreadLocalTransactionManager.kt:370)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt$transaction$1.invoke(ThreadLocalTransactionManager.kt:279)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.keepAndRestoreTransactionRefAfterRun(ThreadLocalTransactionManager.kt:379)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction(ThreadLocalTransactionManager.kt:249)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction(ThreadLocalTransactionManager.kt:227)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction$default(ThreadLocalTransactionManager.kt:226)
+	at eu.tutorials.data.datasource.config.DatabaseFactory.init(DatabaseFactory.kt:31)
+	at eu.tutorials.server.ApplicationKt.module(Application.kt:86)
+	at eu.tutorials.server.KtorServer$start$1.invoke(KtorServer.kt:25)
+	at eu.tutorials.server.KtorServer$start$1.invoke(KtorServer.kt:24)
+	at io.ktor.server.engine.internal.CallableUtilsKt.executeModuleFunction(CallableUtils.kt:51)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading$launchModuleByName$1.invoke(ApplicationEngineEnvironmentReloading.kt:332)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading$launchModuleByName$1.invoke(ApplicationEngineEnvironmentReloading.kt:331)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.avoidingDoubleStartupFor(ApplicationEngineEnvironmentReloading.kt:356)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.launchModuleByName(ApplicationEngineEnvironmentReloading.kt:331)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.access$launchModuleByName(ApplicationEngineEnvironmentReloading.kt:32)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading$instantiateAndConfigureApplication$1.invoke(ApplicationEngineEnvironmentReloading.kt:319)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading$instantiateAndConfigureApplication$1.invoke(ApplicationEngineEnvironmentReloading.kt:310)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.avoidingDoubleStartup(ApplicationEngineEnvironmentReloading.kt:338)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.instantiateAndConfigureApplication(ApplicationEngineEnvironmentReloading.kt:310)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.createApplication(ApplicationEngineEnvironmentReloading.kt:150)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.start(ApplicationEngineEnvironmentReloading.kt:277)
+	at io.ktor.server.cio.CIOApplicationEngine$initServerJob$1$2.invokeSuspend(CIOApplicationEngine.kt:207)
+	at io.ktor.server.cio.CIOApplicationEngine$initServerJob$1$2.invoke(CIOApplicationEngine.kt)
+	at io.ktor.server.cio.CIOApplicationEngine$initServerJob$1$2.invoke(CIOApplicationEngine.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:61)
+	at kotlinx.coroutines.BuildersKt__Builders_commonKt.withContext(Builders.common.kt:163)
+	at kotlinx.coroutines.BuildersKt.withContext(Unknown Source)
+	at io.ktor.server.cio.CIOApplicationEngine$initServerJob$1.invokeSuspend(CIOApplicationEngine.kt:206)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:585)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:802)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:706)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:693)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:150)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:166)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:89)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:121)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:945)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:815)
+	... 61 common frames omitted
+Caused by: java.net.UnknownHostException: volunteer-mysql
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:130)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:63)
+	... 64 common frames omitted
+2026-04-01 18:57:42.734 [DefaultDispatcher-worker-1] WARN  Exposed - Wait 0 milliseconds before retrying
+2026-04-01 18:57:42.736 [DefaultDispatcher-worker-1] WARN  Exposed - Transaction attempt #2 failed: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.. Statement(s): null
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:175)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:64)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at org.jetbrains.exposed.sql.Database$Companion$connect$8.invoke(Database.kt:287)
+	at org.jetbrains.exposed.sql.Database$Companion$connect$8.invoke(Database.kt:283)
+	at org.jetbrains.exposed.sql.Database$Companion$doConnect$3.invoke(Database.kt:165)
+	at org.jetbrains.exposed.sql.Database$Companion$doConnect$3.invoke(Database.kt:166)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction$connectionLazy$1.invoke(ThreadLocalTransactionManager.kt:138)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction$connectionLazy$1.invoke(ThreadLocalTransactionManager.kt:137)
+	at kotlin.UnsafeLazyImpl.getValue(Lazy.kt:81)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManager$ThreadLocalTransaction.getConnection(ThreadLocalTransactionManager.kt:163)
+	at org.jetbrains.exposed.sql.Transaction.getConnection(Transaction.kt)
+	at org.jetbrains.exposed.sql.Database.metadata$exposed_core(Database.kt:44)
+	at org.jetbrains.exposed.sql.vendors.VendorDialect.resetCaches(VendorDialect.kt:143)
+	at org.jetbrains.exposed.sql.SchemaUtils.createMissingTablesAndColumns(SchemaUtils.kt:480)
+	at org.jetbrains.exposed.sql.SchemaUtils.createMissingTablesAndColumns$default(SchemaUtils.kt:478)
+	at eu.tutorials.data.datasource.config.DatabaseFactory$init$1.invoke(DatabaseFactory.kt:32)
+	at eu.tutorials.data.datasource.config.DatabaseFactory$init$1.invoke(DatabaseFactory.kt:31)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.inTopLevelTransaction$run(ThreadLocalTransactionManager.kt:324)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.access$inTopLevelTransaction$run(ThreadLocalTransactionManager.kt:1)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt$inTopLevelTransaction$1.invoke(ThreadLocalTransactionManager.kt:371)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.keepAndRestoreTransactionRefAfterRun(ThreadLocalTransactionManager.kt:379)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.inTopLevelTransaction(ThreadLocalTransactionManager.kt:370)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt$transaction$1.invoke(ThreadLocalTransactionManager.kt:279)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.keepAndRestoreTransactionRefAfterRun(ThreadLocalTransactionManager.kt:379)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction(ThreadLocalTransactionManager.kt:249)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction(ThreadLocalTransactionManager.kt:227)
+	at org.jetbrains.exposed.sql.transactions.ThreadLocalTransactionManagerKt.transaction$default(ThreadLocalTransactionManager.kt:226)
+	at eu.tutorials.data.datasource.config.DatabaseFactory.init(DatabaseFactory.kt:31)
+	at eu.tutorials.server.ApplicationKt.module(Application.kt:86)
+	at eu.tutorials.server.KtorServer$start$1.invoke(KtorServer.kt:25)
+	at eu.tutorials.server.KtorServer$start$1.invoke(KtorServer.kt:24)
+	at io.ktor.server.engine.internal.CallableUtilsKt.executeModuleFunction(CallableUtils.kt:51)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading$launchModuleByName$1.invoke(ApplicationEngineEnvironmentReloading.kt:332)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading$launchModuleByName$1.invoke(ApplicationEngineEnvironmentReloading.kt:331)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.avoidingDoubleStartupFor(ApplicationEngineEnvironmentReloading.kt:356)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.launchModuleByName(ApplicationEngineEnvironmentReloading.kt:331)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.access$launchModuleByName(ApplicationEngineEnvironmentReloading.kt:32)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading$instantiateAndConfigureApplication$1.invoke(ApplicationEngineEnvironmentReloading.kt:319)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading$instantiateAndConfigureApplication$1.invoke(ApplicationEngineEnvironmentReloading.kt:310)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.avoidingDoubleStartup(ApplicationEngineEnvironmentReloading.kt:338)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.instantiateAndConfigureApplication(ApplicationEngineEnvironmentReloading.kt:310)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.createApplication(ApplicationEngineEnvironmentReloading.kt:150)
+	at io.ktor.server.engine.ApplicationEngineEnvironmentReloading.start(ApplicationEngineEnvironmentReloading.kt:277)
+	at io.ktor.server.cio.CIOApplicationEngine$initServerJob$1$2.invokeSuspend(CIOApplicationEngine.kt:207)
+	at io.ktor.server.cio.CIOApplicationEngine$initServerJob$1$2.invoke(CIOApplicationEngine.kt)
+	at io.ktor.server.cio.CIOApplicationEngine$initServerJob$1$2.invoke(CIOApplicationEngine.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:61)
+	at kotlinx.coroutines.BuildersKt__Builders_commonKt.withContext(Builders.common.kt:163)
+	at kotlinx.coroutines.BuildersKt.withContext(Unknown Source)
+	at io.ktor.server.cio.CIOApplicationEngine$initServerJob$1.invokeSuspend(CIOApplicationEngine.kt:206)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+	at kotlinx.coroutines.internal.LimitedDispatcher$Worker.run(LimitedDispatcher.kt:111)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:99)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:585)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:802)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:706)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:693)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:150)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:166)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:89)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:121)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:945)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:815)
+	... 61 common frames omitted
+Caused by: java.net.UnknownHostException: volunteer-mysql
+	at java.base/java.net.InetAddress$CachedLookup.get(InetAddress.java:988)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1818)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1688)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:130)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:63)
+	... 64 common frames omitted
+2026-04-01 18:59:31.565 [DefaultDispatcher-worker-1] INFO  ktor.application - Autoreload is disabled because the development mode is off.
+2026-04-01 18:59:32.969 [DefaultDispatcher-worker-1] INFO  Exposed - Preparing create tables statements took 59ms
+2026-04-01 18:59:32.988 [DefaultDispatcher-worker-1] INFO  Exposed - Executing create tables statements took 19ms
+2026-04-01 18:59:33.062 [DefaultDispatcher-worker-1] INFO  Exposed - Extracting table columns took 74ms
+2026-04-01 18:59:33.088 [DefaultDispatcher-worker-1] INFO  Exposed - Extracting primary keys took 25ms
+2026-04-01 18:59:33.131 [DefaultDispatcher-worker-1] DEBUG Exposed - SELECT
+                  rc.CONSTRAINT_NAME,
+                  ku.TABLE_NAME,
+                  ku.COLUMN_NAME,
+                  ku.REFERENCED_TABLE_NAME,
+                  ku.REFERENCED_COLUMN_NAME,
+                  rc.UPDATE_RULE,
+                  rc.DELETE_RULE
+                FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc
+                  INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE ku
+                    ON ku.TABLE_SCHEMA = rc.CONSTRAINT_SCHEMA AND rc.CONSTRAINT_NAME = ku.CONSTRAINT_NAME
+                WHERE ku.TABLE_SCHEMA = 'volunteer'
+                  AND ku.CONSTRAINT_SCHEMA = 'volunteer'
+                  AND rc.CONSTRAINT_SCHEMA = 'volunteer'
+                  AND  ku.TABLE_NAME IN ('user','bin','card','help','history','financial_help','donation','material_help','material_participation')
+                ORDER BY ku.ORDINAL_POSITION
+2026-04-01 18:59:33.131 [DefaultDispatcher-worker-1] INFO  Exposed - Extracting column constraints took 35ms
+2026-04-01 18:59:33.132 [DefaultDispatcher-worker-1] INFO  Exposed - Preparing alter table statements took 144ms
+2026-04-01 18:59:33.133 [DefaultDispatcher-worker-1] INFO  Exposed - Executing alter table statements took 1ms
+2026-04-01 18:59:33.137 [DefaultDispatcher-worker-1] DEBUG Exposed - SELECT
+                  rc.CONSTRAINT_NAME,
+                  ku.TABLE_NAME,
+                  ku.COLUMN_NAME,
+                  ku.REFERENCED_TABLE_NAME,
+                  ku.REFERENCED_COLUMN_NAME,
+                  rc.UPDATE_RULE,
+                  rc.DELETE_RULE
+                FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc
+                  INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE ku
+                    ON ku.TABLE_SCHEMA = rc.CONSTRAINT_SCHEMA AND rc.CONSTRAINT_NAME = ku.CONSTRAINT_NAME
+                WHERE ku.TABLE_SCHEMA = 'volunteer'
+                  AND ku.CONSTRAINT_SCHEMA = 'volunteer'
+                  AND rc.CONSTRAINT_SCHEMA = 'volunteer'
+                  AND  ku.TABLE_NAME IN ('user')
+                ORDER BY ku.ORDINAL_POSITION
+2026-04-01 18:59:33.182 [DefaultDispatcher-worker-1] DEBUG Exposed - SELECT
+                  rc.CONSTRAINT_NAME,
+                  ku.TABLE_NAME,
+                  ku.COLUMN_NAME,
+                  ku.REFERENCED_TABLE_NAME,
+                  ku.REFERENCED_COLUMN_NAME,
+                  rc.UPDATE_RULE,
+                  rc.DELETE_RULE
+                FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc
+                  INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE ku
+                    ON ku.TABLE_SCHEMA = rc.CONSTRAINT_SCHEMA AND rc.CONSTRAINT_NAME = ku.CONSTRAINT_NAME
+                WHERE ku.TABLE_SCHEMA = 'volunteer'
+                  AND ku.CONSTRAINT_SCHEMA = 'volunteer'
+                  AND rc.CONSTRAINT_SCHEMA = 'volunteer'
+                  AND  ku.TABLE_NAME IN ('user')
+                ORDER BY ku.ORDINAL_POSITION
+2026-04-01 18:59:33.189 [DefaultDispatcher-worker-1] INFO  Exposed - Checking mapping consistence took 56ms
+2026-04-01 18:59:33.472 [DefaultDispatcher-worker-1] INFO  ktor.application - Application started in 2.018 seconds.
+2026-04-01 18:59:33.502 [DefaultDispatcher-worker-2] INFO  ktor.application - Responding at http://127.0.0.1:8080
+2026-04-01 18:59:52.969 [DefaultDispatcher-worker-6] DEBUG Exposed - SELECT `user`.id, `user`.first_name, `user`.last_name, `user`.`role`, `user`.phone, `user`.email, `user`.password_hash, `user`.telegram, `user`.photo, `user`.is_blocked, `user`.created_at, `user`.updated_at FROM `user`
