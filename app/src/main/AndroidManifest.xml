@@ -21,18 +21,6 @@
             android:name=".PaymentActivity"
             android:exported="true"/>
 
-        <!-- Braintree Browser Switch -->
-        <activity
-            android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="com.braintreepayments.api.*"/>
-            </intent-filter>
-        </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
