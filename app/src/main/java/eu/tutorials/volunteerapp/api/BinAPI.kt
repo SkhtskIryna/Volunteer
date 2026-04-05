@@ -24,7 +24,7 @@ import kotlinx.serialization.json.Json
 
 class BinAPI (
     private var authHeader: String? = null,
-    private val baseUrl: String = "http://10.0.2.2:8080"
+    private val baseUrl: String = "https://volunteer-app.pp.ua" // "http://192.168.0.181:8080"
 ) {
 
     private var client = createClient()

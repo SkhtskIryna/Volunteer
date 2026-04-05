@@ -2,16 +2,22 @@ services:
   db:
     image: mysql:8.0
     ports:
-      - "3307:3306"
+      - "${DB_LOCAL_PORT}:${DB_DOCKER_PORT}"
     environment:
-      MYSQL_DATABASE: volunteer
-      MYSQL_ROOT_PASSWORD: MyNewPass123!
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
 
   app:
     build: .
     depends_on:
       - db
     ports:
-      - "8080:8080"
+      - "${APP_LOCAL_PORT}:${APP_DOCKER_PORT}"
     environment:
-      DB_URL: "jdbc:mysql://db:3306/volunteer?useSSL=false&allowPublicKeyRetrieval=true"
+      DB_URL: "jdbc:mysql://db:${DB_DOCKER_PORT}/${DB_NAME}?useSSL=false&allowPublicKeyRetrieval=true"
+      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+
+  tunnel:
+    image: cloudflare/cloudflared
+    restart: always
+    command: tunnel --no-autoupdate run --token ${CF_TUNNEL_TOKEN}

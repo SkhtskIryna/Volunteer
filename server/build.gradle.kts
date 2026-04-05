@@ -38,27 +38,6 @@ tasks.processResources {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
-tasks.register<Jar>("fatJar") {
-    archiveBaseName.set("server")
-    archiveVersion.set("")
-
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-    manifest {
-        attributes["Main-Class"] = "eu.tutorials.server.ServerKt"
-    }
-
-    from(sourceSets.main.get().output)
-
-    dependsOn(configurations.runtimeClasspath)
-
-    from({
-        configurations.runtimeClasspath.get().map {
-            if (it.isDirectory) it else zipTree(it)
-        }
-    })
-}
-
 tasks.named<ShadowJar>("shadowJar") {
     archiveBaseName.set("server")
     archiveClassifier.set("")

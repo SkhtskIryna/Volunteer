@@ -17,7 +17,7 @@ import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-class ClientTokenProvider(private val baseUrl: String = "http://10.0.2.2:8080") {
+class ClientTokenProvider(private val baseUrl: String = "https://volunteer-app.pp.ua") {
 
     private val client = HttpClient(Android) {
         install(ContentNegotiation) {
