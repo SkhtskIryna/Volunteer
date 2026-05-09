@@ -46,8 +46,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.tutorials.volunteerapp.MainViewModel
 import eu.tutorials.volunteerapp.data.Card
-import eu.tutorials.volunteerapp.ui.components.loadCardNumberFromFile
-import eu.tutorials.volunteerapp.ui.components.saveCardNumberToFile
 import eu.tutorials.volunteerapp.ui.components.saveCvv2ToFile
 import eu.tutorials.volunteerapp.ui.theme.Colors
 import kotlinx.coroutines.flow.filter
@@ -95,8 +93,7 @@ fun CardSettings(viewModel: MainViewModel, navController: NavController) {
                     Log.e("CVV2", cvv2)
                 }
 
-                val loadedNumber = loadCardNumberFromFile(context, userIdValue!!)
-                fullCardNumber = loadedNumber?.filter { it.isDigit() } ?: ""
+                fullCardNumber = userCard?.number?.filter { it.isDigit() } ?: ""
                 cardNumber = if (fullCardNumber.length == 16)
                     "*".repeat(12) + fullCardNumber.takeLast(4)
                 else
@@ -254,7 +251,7 @@ fun CardSettings(viewModel: MainViewModel, navController: NavController) {
                     card?.let { c ->
 
                         val updatedCard = c.copy(
-                            number = cardNumber,
+                            number = fullCardNumber,
                             validityPeriod = cardExpiry
                         )
 
@@ -272,12 +269,6 @@ fun CardSettings(viewModel: MainViewModel, navController: NavController) {
                                     saveCvv2ToFile(context, updatedCard.idRecipient, cvv2)
                                     Log.d("CVV2", "CVV2 saved to file for user ${updatedCard.idRecipient}")
                                 }
-
-                                if (cardNumber.isNotBlank()) {
-                                    saveCardNumberToFile(context, updatedCard.idRecipient, cardNumber)
-                                    Log.d("CardNumber", "CardNumber saved to file for user ${updatedCard.idRecipient}")
-                                }
-
                                 navController.popBackStack()
                             }
                         }

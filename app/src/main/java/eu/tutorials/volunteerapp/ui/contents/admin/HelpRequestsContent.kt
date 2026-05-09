@@ -17,6 +17,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,9 +41,6 @@ fun HelpRequestsContent(
 ) {
     LaunchedEffect(userId) {
         viewModel.getAllHelps()
-    }
-
-    LaunchedEffect(Unit) {
         viewModel.getAllHistories()
     }
 
@@ -54,12 +54,16 @@ fun HelpRequestsContent(
 
     val activeHelpsWithHistory = helpsWithLastHistory.filter { (help, lastHistory) ->
         histories.none { history ->
-            history.idHelp == help.id &&
+            history.idRequest == help.id &&
                     history.status in setOf(HistoryStatus.Approved, HistoryStatus.Rejected)
         }
     }
 
-    val isLoading = helpsList.isEmpty()
+    var isLoading by remember { mutableStateOf(true) }
+
+    LaunchedEffect(helpsList, histories) {
+        isLoading = false
+    }
 
     LazyColumn(
         modifier = Modifier

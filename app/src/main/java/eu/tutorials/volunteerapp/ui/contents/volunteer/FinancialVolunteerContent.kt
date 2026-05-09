@@ -117,7 +117,7 @@ fun FinancialVolunteerContent(
         val user = users.find { it.id == help.idRecipient }
         val query = searchQuery.trim().lowercase()
 
-        val helpDate = help.createdAt.toLocalDate()
+        val financial = help as? Help.Financial
 
         val matchesSearch =
             query.isBlank() ||
@@ -141,18 +141,18 @@ fun FinancialVolunteerContent(
                                     (amountToValue == null || help.plannedAmount <= amountToValue)
                             )
 
-        val matchesFromDate =
-            fromDate == null || !helpDate.isBefore(fromDate)
-
-        val matchesToDate =
-            toDate == null || !helpDate.isAfter(toDate)
+        val matchesDateRange =
+            financial == null ||
+                    (
+                            (fromDate == null || !financial.to.isBefore(fromDate)) &&
+                                    (toDate == null || !financial.from.isAfter(toDate))
+                            )
 
         matchesSearch &&
                 matchesTitle &&
                 matchesDescription &&
                 matchesAmount &&
-                matchesFromDate &&
-                matchesToDate
+                matchesDateRange
     }
 
     val isLoading = helpsList.isEmpty()

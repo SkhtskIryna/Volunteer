@@ -1,7 +1,5 @@
 package eu.tutorials.volunteerapp.viewmodels
 
-import android.util.Log
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eu.tutorials.domain.model.Bin
@@ -9,62 +7,39 @@ import eu.tutorials.volunteerapp.api.BinAPI
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class BinViewModel: ViewModel() {
-    private val apiClient = BinAPI()
-    private var authToken: String? = null
+class BinViewModel : ViewModel() {
+
+    private val api = BinAPI()
+
+    private val _bin = MutableStateFlow<List<Bin>>(emptyList())
+    val bin = _bin
 
     private val _error = MutableStateFlow<String?>(null)
-    private val _bin = MutableStateFlow<List<Bin>>(emptyList())
 
-    val authBin = mutableStateListOf<Bin>()
-
-    fun updateAuthHeader(token: String) {
-        authToken = token
-        apiClient.updateAuthHeader(token)
-        Log.d("BinViewModel", "Auth token updated: $token")
-    }
-
-    fun getAll() {
+    fun getAll(token: String) {
         viewModelScope.launch {
-            try {
-                _bin.value = apiClient.getAllBin()!!
-            } catch (e: Exception) {
-                _error.value = e.message
-            }
+            val result = api.getAllBin(token)
+            if (result != null) _bin.value = result
         }
     }
 
-    fun create(bin: Bin, onResult: (Bin?) -> Unit) {
+    fun create(bin: Bin, token: String, onResult: (Bin?) -> Unit) {
         viewModelScope.launch {
-            try {
-                Log.d("BinViewModel", "Creating bin: $bin")
-                authBin.add(bin)
-                val createdBin = apiClient.createBin(bin)
-                createdBin?.let {
-                    _bin.value = _bin.value + it
-                }
-                onResult(createdBin)
-
-                getAll()
-            } catch (e: Exception) {
-                _error.value = e.message
+            val result = api.createBin(bin, token)
+            if (result != null) {
+                _bin.value = _bin.value + result
             }
+            onResult(result)
         }
     }
 
-    fun delete(id: Int, onResult: ((Boolean) -> Unit)? = null) {
+    fun delete(id: Int, token: String, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
-            try {
-                val deleted = apiClient.deleteBin(id)
-                if (deleted) {
-                    _bin.value = _bin.value.filter { it.id != id }
-                    authBin.removeIf { it.id == id }
-                }
-                onResult?.invoke(deleted)
-            } catch (e: Exception) {
-                _error.value = e.message
-                onResult?.invoke(false)
+            val success = api.deleteBin(id, token)
+            if (success) {
+                _bin.value = _bin.value.filterNot { it.id == id }
             }
+            onResult(success)
         }
     }
 }

@@ -74,7 +74,6 @@ class UserViewModel: ViewModel() {
                     materialParticipationAPI.updateAuthHeader(it)
                     historyAPI.updateAuthHeader(it)
                     donationAPI.updateAuthHeader(it)
-                    binAPI.updateAuthHeader(it)
                 }
 
                 onResult(response.success, role)

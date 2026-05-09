@@ -80,6 +80,8 @@ class MainViewModel(val userViewModel: UserViewModel,
     private val _donations = MutableStateFlow<List<Donation>>(emptyList())
     val donations: StateFlow<List<Donation>> = _donations
 
+    private val creatingHistories = mutableSetOf<Int>()
+
     init {
         viewModelScope.launch {
             clientTokenViewModel.clientToken.collect { token ->
@@ -113,18 +115,32 @@ class MainViewModel(val userViewModel: UserViewModel,
     }
 
     fun toggleUserBlock(user: User) {
+
+        val token = userViewModel.getToken() ?: return
         val newState = !(user.isBlocked ?: false)
 
         userViewModel.updateUserBlock(user.id!!, newState) { success ->
-            if (success) {
+            if (!success) return@updateUserBlock
+
+            if (newState) {
+                binViewModel.create(
+                    Bin(idRecipient = user.id),
+                    token
+                ) { result ->
+                    if (result == null) {
+                        Log.e("BLOCK", "Bin creation failed")
+                    }
+                }
+            } else {
+                val binItem = binViewModel.bin.value.find {
+                    it.idRecipient == user.id
+                }
+
+                binItem?.id?.let {
+                    binViewModel.delete(it, token) {}
+                }
             }
         }
-
-        binViewModel.create(
-            Bin(
-                idRecipient = user.id
-            )
-        ){}
     }
 
     fun updateMaterialStatus(helpId: Int, newStatus: MaterialParticipationStatus) {
@@ -242,31 +258,44 @@ class MainViewModel(val userViewModel: UserViewModel,
 
         viewModelScope.launch {
             try {
-                // Перевірка
-                if (_userHistories.value.any { it.idRequest == helpId }) {
-                    Log.d("History", "Already exists locally for requestId=$helpId")
+                // якщо вже створюється — не запускати ще раз
+                if (helpId in creatingHistories) {
+                    Log.d("History", "Already creating for requestId=$helpId")
                     return@launch
                 }
 
-                // Отримання актуальних історій
-                historyViewModel.getAll()
+                creatingHistories.add(helpId)
 
+                // локальна перевірка
+                if (_userHistories.value.any {
+                        it.idRequest == helpId &&
+                                it.status == HistoryStatus.Pending
+                    }) {
+                    Log.d("History", "Already exists locally for requestId=$helpId")
+                    creatingHistories.remove(helpId)
+                    return@launch
+                }
+
+                // актуальні історії з сервера
+                delay(2000)
+                historyViewModel.getAll()
+                delay(2000)
                 val historiesFromServer = historyViewModel.history.first()
 
-                // Перевірка на сервері
-                val existingHistory = historiesFromServer.find { it.idRequest == helpId }
+                val existingHistory =
+                    historiesFromServer.find {
+                        it.idRequest == helpId &&
+                                it.status == HistoryStatus.Pending
+                    }
 
                 if (existingHistory != null) {
                     Log.d("History", "Already exists on server for requestId=$helpId")
 
-                    _userHistories.value = _userHistories.value
-                        .filterNot { it.idRequest == helpId } + existingHistory
+                    _userHistories.value =
+                        _userHistories.value
+                            .filterNot { it.idRequest == helpId } + existingHistory
 
-                    return@launch
-                }
-
-                // Захист від дублювання
-                if (_userHistories.value.any { it.idRequest == helpId }) {
+                    creatingHistories.remove(helpId)
                     return@launch
                 }
 
@@ -279,16 +308,23 @@ class MainViewModel(val userViewModel: UserViewModel,
                         idRequest = helpId
                     )
                 ) { newHistory ->
+
                     newHistory?.let {
-                        // Додається, якщо ще не існує
-                        if (_userHistories.value.none { h -> h.idRequest == helpId }) {
-                            _userHistories.value = _userHistories.value + it
+                        if (_userHistories.value.none { h ->
+                                h.idRequest == helpId
+                            }
+                        ) {
+                            _userHistories.value =
+                                _userHistories.value + it
                         }
                     }
+
+                    creatingHistories.remove(helpId)
                 }
 
             } catch (e: Exception) {
-                Log.e("History", "Failed to ensure history: ${e.message}")
+                creatingHistories.remove(helpId)
+                Log.e("History", "Failed: ${e.message}")
             }
         }
     }

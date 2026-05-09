@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -19,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -63,7 +63,7 @@ fun BottomBar(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier
-                            .width(72.dp)
+                            .weight(1f)
                             .fillMaxHeight()
                     ) {
                         Icon(
@@ -77,7 +77,7 @@ fun BottomBar(
                             fontSize = 14.sp,
                             textAlign = TextAlign.Center,
                             maxLines = 2,
-                            color = Color(Colors.LightBlue.rgb)
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 },

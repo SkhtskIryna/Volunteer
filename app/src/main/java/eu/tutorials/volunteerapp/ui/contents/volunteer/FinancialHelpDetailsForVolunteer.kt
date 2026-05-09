@@ -53,7 +53,6 @@ import eu.tutorials.volunteerapp.PaymentActivity
 import eu.tutorials.volunteerapp.data.User
 import eu.tutorials.volunteerapp.findActivity
 import eu.tutorials.volunteerapp.ui.components.UserAvatar
-import eu.tutorials.volunteerapp.ui.components.loadCardNumberFromFile
 import eu.tutorials.volunteerapp.ui.theme.Colors
 import java.math.BigDecimal
 import java.time.format.DateTimeFormatter
@@ -71,16 +70,16 @@ fun FinancialHelpDetailsForVolunteer(
     var amountText by remember { mutableStateOf("") }
     var recipientCardNumber by remember { mutableStateOf("") }
     val clientToken by viewModel.clientToken.collectAsState()
+    val cards by viewModel.cards.collectAsState()
 
-    LaunchedEffect(help?.idRecipient) {
+    LaunchedEffect(help?.idRecipient, cards) {
         help?.idRecipient?.let { recipientId ->
             viewModel.getUserById(recipientId) { user ->
                 recipient = user
-                user?.id?.let { id ->
-                    val loadedNumber = loadCardNumberFromFile(context, id)
-                    recipientCardNumber = loadedNumber?.filter { it.isDigit() } ?: ""
-                }
             }
+
+            val userCard = cards.find { it.idRecipient == recipientId }
+            recipientCardNumber = userCard?.number?.filter { it.isDigit() } ?: ""
         }
     }
 
@@ -233,7 +232,7 @@ fun FinancialHelpDetailsForVolunteer(
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                             )
                             Spacer(Modifier.width(8.dp))
-                            Text("UAH", fontWeight = FontWeight.Bold)
+                            Text("UAH", fontWeight = FontWeight.Bold, color= Color(Colors.DarkBlue.rgb))
                         }
 
                         Spacer(Modifier.height(8.dp))

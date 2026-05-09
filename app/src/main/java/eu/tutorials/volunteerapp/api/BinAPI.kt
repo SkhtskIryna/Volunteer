@@ -3,10 +3,8 @@ package eu.tutorials.volunteerapp.api
 import android.util.Log
 import eu.tutorials.domain.model.Bin
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -14,7 +12,6 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
-import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
@@ -22,66 +19,76 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
-class BinAPI (
-    private var authHeader: String? = null,
-    private val baseUrl: String = "https://volunteer-app.pp.ua" // "http://192.168.0.181:8080"
+class BinAPI(
+    private val baseUrl: String = "https://volunteer-app.pp.ua"
 ) {
 
-    private var client = createClient()
-
-    private fun createClient() = HttpClient(Android) {
+    private val client = HttpClient(Android) {
         install(ContentNegotiation) {
             json(Json { ignoreUnknownKeys = true })
         }
         expectSuccess = false
-
-        defaultRequest {
-            authHeader?.let { header("Authorization", it) }
-        }
-    }
-
-    fun updateAuthHeader(header: String) {
-        authHeader = header
-        client = createClient()
-        Log.d("BinAPI", "Auth updated: $authHeader")
     }
 
     // GET /bin
-    suspend fun getAllBin(): List<Bin>? = withContext(Dispatchers.IO) {
+    suspend fun getAllBin(token: String): List<Bin>? = withContext(Dispatchers.IO) {
         try {
-            val response = client.get("$baseUrl/bin")
-            Log.d("BinAPI", "Response status: ${response.status}")
-            val bodyText = response.bodyAsText()
-            Log.d("BinAPI", "Response body: $bodyText")
-
-            if (response.status == HttpStatusCode.OK) {
-                Json.decodeFromString<List<Bin>>(bodyText)
-            } else {
-                null
+            val response = client.get("$baseUrl/bin") {
+                header("Authorization", token)
             }
+
+            val bodyText = response.bodyAsText()
+            Log.d("BIN_DEBUG", "GET STATUS = ${response.status}")
+            Log.d("BIN_DEBUG", "GET BODY = $bodyText")
+
+            if (response.status.isSuccess()) {
+                Json.decodeFromString(bodyText)
+            } else null
+
         } catch (e: Exception) {
-            Log.e("BinAPI", "Failed to get bin: ${e.message}")
+            Log.e("BIN_DEBUG", "GET ERROR: ${e.message}")
             null
         }
     }
 
     // POST /bin
-    suspend fun createBin(bin: Bin): Bin? = withContext(Dispatchers.IO) {
+    suspend fun createBin(bin: Bin, token: String): Bin? = withContext(Dispatchers.IO) {
         try {
             val response = client.post("$baseUrl/bin") {
                 contentType(ContentType.Application.Json)
+                header("Authorization", token)
                 setBody(bin)
             }
-            if (response.status.isSuccess()) response.body() else null
-        } catch (_: Exception) { null }
+
+            val bodyText = response.bodyAsText()
+
+            Log.d("BIN_DEBUG", "CREATE TOKEN = $token")
+            Log.d("BIN_DEBUG", "CREATE STATUS = ${response.status}")
+            Log.d("BIN_DEBUG", "CREATE BODY = $bodyText")
+
+            return@withContext if (response.status.isSuccess()) {
+                Json.decodeFromString(bodyText)
+            } else null
+
+        } catch (e: Exception) {
+            Log.e("BIN_DEBUG", "CREATE ERROR: ${e.message}")
+            null
+        }
     }
 
     // DELETE /bin/{id}
-    suspend fun deleteBin(id: Int): Boolean = withContext(Dispatchers.IO) {
+    suspend fun deleteBin(id: Int, token: String): Boolean = withContext(Dispatchers.IO) {
         try {
-            val result: Map<String, Boolean> =
-                client.delete("$baseUrl/bin/$id").body()
-            result["deleted"] ?: false
-        } catch (_: Exception) { false }
+            val response = client.delete("$baseUrl/bin/$id") {
+                header("Authorization", token)
+            }
+
+            Log.d("BIN_DEBUG", "DELETE STATUS = ${response.status}")
+
+            response.status.isSuccess()
+        } catch (e: Exception) {
+            Log.e("BIN_DEBUG", "DELETE ERROR: ${e.message}")
+            false
+        }
     }
 }

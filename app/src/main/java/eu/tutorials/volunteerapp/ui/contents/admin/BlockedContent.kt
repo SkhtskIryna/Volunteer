@@ -52,7 +52,6 @@ fun BlockedContent(
 
     val users by viewModel.recipients.collectAsState(initial = emptyList())
     var searchQuery by rememberSaveable { mutableStateOf("") }
-    val cards by viewModel.cards.collectAsState(initial = emptyList())
     val isLoading = users.isEmpty()
 
     LaunchedEffect(users) {

@@ -44,7 +44,6 @@ import androidx.navigation.NavController
 import eu.tutorials.domain.model.UserRole
 import eu.tutorials.volunteerapp.MainViewModel
 import eu.tutorials.volunteerapp.ui.components.outlinedField
-import eu.tutorials.volunteerapp.ui.components.saveCardNumberToFile
 import eu.tutorials.volunteerapp.ui.components.saveCvv2ToFile
 import eu.tutorials.volunteerapp.ui.navigation.signUp.LinkToAdministrators
 import eu.tutorials.volunteerapp.ui.navigation.signUp.LinkToSingIn
@@ -333,6 +332,8 @@ fun SignUp (viewModel: MainViewModel, navController: NavController) {
                     }
                 }
 
+                Spacer(modifier = Modifier.padding(8.dp))
+
                 Column {
                     Text(text = "CVV2", style = MaterialTheme.typography.titleLarge.copy(
                         fontSize = 22.sp,
@@ -499,7 +500,6 @@ fun SignUp (viewModel: MainViewModel, navController: NavController) {
 
                             Log.e("CVV2", cvv2)
                             saveCvv2ToFile(context, createdUserId, cvv2)
-                            saveCardNumberToFile(context, createdUserId, cardNumber)
                         }
                         Toast.makeText(context, "Користувача / карту успішно створено!", Toast.LENGTH_LONG).show()
                     } else {

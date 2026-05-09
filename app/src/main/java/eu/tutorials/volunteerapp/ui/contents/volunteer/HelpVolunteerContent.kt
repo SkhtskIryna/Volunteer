@@ -1,6 +1,8 @@
 package eu.tutorials.volunteerapp.ui.contents.volunteer
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,9 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,6 +29,7 @@ import eu.tutorials.domain.model.Help
 import eu.tutorials.volunteerapp.MainViewModel
 import eu.tutorials.volunteerapp.ui.theme.Colors
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HelpVolunteerContent(
     viewModel: MainViewModel,
@@ -46,7 +47,6 @@ fun HelpVolunteerContent(
 
     val helps by viewModel.helpsList.collectAsState()
     val materialParticipations by viewModel.materialParticipationList.collectAsState()
-    val histories by viewModel.userHistories.collectAsState()
     val donations by viewModel.donations.collectAsState()
 
     val isLoading =
@@ -62,30 +62,21 @@ fun HelpVolunteerContent(
                     materialParticipations
                         .filter { it.idVolunteer == userId }
                         .map { it.idMaterialRequest }
-            ).distinct()
+            )
 
-    val volunteerHelps by remember(helps, helpIds) {
-        derivedStateOf {
-            helps.filter { help ->
-                help.id != null && helpIds.contains(help.id)
-            }
+    val financialItems = donations
+        .filter { it.idVolunteer == userId }
+        .mapNotNull { donation ->
+            val help = helps.find { it.id == donation.idFinancialRequest }
+            help?.let { it to donation }
         }
-    }
 
-    val helpsWithLastHistory by remember(volunteerHelps, histories) {
-        derivedStateOf {
-
-            volunteerHelps.map { help ->
-
-                val lastHistory =
-                    histories
-                        .filter { it.idRequest == help.id }
-                        .maxByOrNull { it.id ?: 0 }
-
-                help to lastHistory
-            }
+    val materialItems = materialParticipations
+        .filter { it.idVolunteer == userId }
+        .mapNotNull { participation ->
+            val help = helps.find { it.id == participation.idMaterialRequest }
+            help?.let { it to participation }
         }
-    }
 
     LaunchedEffect(donations, materialParticipations) {
         Log.d("VOLUNTEER", "donations: $donations")
@@ -130,8 +121,7 @@ fun HelpVolunteerContent(
                 }
             }
 
-            helpsWithLastHistory.isEmpty() -> {
-
+            financialItems.isEmpty() && materialItems.isEmpty() -> {
                 item {
                     Box(
                         Modifier.fillMaxWidth(),
@@ -149,39 +139,30 @@ fun HelpVolunteerContent(
             }
 
             else -> {
+                items(materialItems) { (help, _) ->
 
-                items(helpsWithLastHistory) { (help, _) ->
-
-                    when (help) {
-                        is Help.Material -> {
-                            HelpCard(
-                                help = help,
-                                viewModel = viewModel,
-                                onDetailsClick = {
-                                    navController.navigate(
-                                        "material_details_for_volunteer/${help.id}"
-                                    )
-                                }
+                    HelpCard(
+                        help = help as Help.Material,
+                        viewModel = viewModel,
+                        onDetailsClick = {
+                            navController.navigate(
+                                "material_details_for_volunteer/${help.id}"
                             )
                         }
+                    )
+                }
 
-                        is Help.Financial -> {
+                items(financialItems) { (help, donation) ->
 
-                            val donationForHelp = donations.find {
-                                it.idFinancialRequest == help.id && it.idVolunteer == userId
-                            }
-
-                            HelpCard(
-                                help = help,
-                                viewModel = viewModel,
-                                onDetailsClick = {
-                                    navController.navigate(
-                                        "financial_details_for_volunteer/${help.id}/${donationForHelp?.id ?: -1}"
-                                    )
-                                }
+                    HelpCard(
+                        help = help as Help.Financial,
+                        viewModel = viewModel,
+                        onDetailsClick = {
+                            navController.navigate(
+                                "financial_details_for_volunteer/${help.id}/${donation.id}"
                             )
                         }
-                    }
+                    )
                 }
             }
         }

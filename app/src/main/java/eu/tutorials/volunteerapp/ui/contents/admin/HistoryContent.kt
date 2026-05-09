@@ -25,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -57,7 +58,11 @@ fun HistoryContent(
     val histories by viewModel.userHistories.collectAsState(initial = emptyList())
     val users by viewModel.users.collectAsState(initial = emptyList())
     var searchQuery by rememberSaveable { mutableStateOf("") }
-    val isLoading = helpsList.isEmpty() || histories.isEmpty() || users.isEmpty()
+    var isLoading by remember { mutableStateOf(true) }
+
+    LaunchedEffect(helpsList, histories, users) {
+        isLoading = false
+    }
 
     // Для дебагу
     LaunchedEffect(helpsList, histories, users) {

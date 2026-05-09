@@ -174,7 +174,8 @@ fun FinancialRecipientContent(viewModel: MainViewModel, navController: NavContro
                     Column {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.fillMaxWidth()
                         ) {
                             OutlinedTextField(
                                 value = planned_amount,
@@ -190,7 +191,7 @@ fun FinancialRecipientContent(viewModel: MainViewModel, navController: NavContro
                                     )
                                 },
                                 modifier = Modifier
-                                    .width(330.dp)
+                                    .weight(1f)
                                     .padding(vertical = 4.dp),
                                 shape = RoundedCornerShape(16.dp),
                                 colors = TextFieldDefaults.colors(
@@ -203,7 +204,7 @@ fun FinancialRecipientContent(viewModel: MainViewModel, navController: NavContro
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                             )
 
-                            Spacer(modifier = Modifier.width(8.dp))
+                            Spacer(modifier = Modifier.width(5.dp))
 
                             Text(
                                 text = "грн",

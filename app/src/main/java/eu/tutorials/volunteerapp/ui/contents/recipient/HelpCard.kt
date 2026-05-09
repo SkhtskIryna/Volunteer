@@ -64,6 +64,13 @@ fun HelpCard(
 ) {
     var showConfirmDialog by remember { mutableStateOf(false) }
 
+    // останній статус
+    val lastHistoryForHelp = history
+
+    // можна видаляти тільки якщо Pending або статус ще відсутній
+    val canDelete = lastHistoryForHelp?.status == HistoryStatus.Pending ||
+            lastHistoryForHelp?.status == null
+
     val dismissState = rememberDismissState(
         confirmStateChange = { dismissValue ->
             if (dismissValue == DismissValue.DismissedToStart) {
@@ -103,7 +110,11 @@ fun HelpCard(
 
     SwipeToDismiss(
         state = dismissState,
-        directions = setOf(DismissDirection.EndToStart),
+        // якщо не можна видаляти — свайп вимикається
+        directions = if (canDelete)
+            setOf(DismissDirection.EndToStart)
+        else
+            emptySet(),
         background = {
             Box(
                 modifier = Modifier
